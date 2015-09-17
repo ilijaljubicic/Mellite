@@ -79,6 +79,8 @@ object MenuBar {
         .addLine()
         .add(Item("selStopToStart",     "Flip Selection Backward"))
         .add(Item("selStartToStop",     "Flip Selection Forward"))
+        .addLine()
+        .add(Item("exportJSON",         "Export to JSON..."))
     ).add(
       Group("operation", "Operation")
         .add(Item("cursorFollows",      "Cursor Follows Playhead"))

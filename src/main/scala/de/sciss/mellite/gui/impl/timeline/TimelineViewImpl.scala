@@ -296,21 +296,21 @@ object TimelineViewImpl {
     view
   }
 
-  private final class Impl[S <: Sys[S]](document          : Document[S],
-                                        groupH            : stm.Source[S#Tx, ProcGroup[S]],
-                                        transp            : ProcTransport[S],
-                                        procMap           : ProcView.ProcMap[S],
-                                        scanMap           : ProcView.ScanMap[S],
-                                        val timelineModel : TimelineModel,
-                                        auralView         : AuralPresentation[S],
-                                        globalView        : GlobalProcsView[S])
-                                       (implicit cursor: Cursor[S])
+  final class Impl[S <: Sys[S]](document          : Document[S],
+                                groupH            : stm.Source[S#Tx, ProcGroup[S]],
+                                transp            : ProcTransport[S],
+                                procMap           : ProcView.ProcMap[S],
+                                scanMap           : ProcView.ScanMap[S],
+                                val timelineModel : TimelineModel,
+                                auralView         : AuralPresentation[S],
+                                val globalView    : GlobalProcsView[S])
+                               (implicit cursor: Cursor[S])
     extends TimelineView[S] with ComponentHolder[Component] {
     impl =>
 
     import cursor.step
 
-    private var procViews = RangedSeq.empty[ProcView[S], Long]
+    var procViews = RangedSeq.empty[ProcView[S], Long]
 
     private var timerFrame  = 0L
     private var timerSys    = 0L
