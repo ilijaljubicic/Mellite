@@ -66,8 +66,8 @@ object ActionOpenFile extends Action( "Open...") {
 
   def apply(): Unit = {
     val dlg = FileDialog.open(title = fullTitle)
-    dlg.setFilter { f => f.isDirectory && f.getName.endsWith(".mllt") }
-    dlg.show(None).foreach(perform)
+    dlg.setFilter { f => f.isDirectory && f.getName.endsWith(".mllt") || f.isFile && f.getName == "je.lck" }
+    dlg.show(None).foreach(f => perform(if (f.getName == "je.lck") f.getParentFile else f))
   }
 
   def perform(folder: File): Unit =

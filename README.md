@@ -1,3 +1,5 @@
+v0.3.x branch -- this is a minor update to v0.3.0, making it build with latest sbt and Scala 2.10, and solving a few issues on Linux.
+
 ![icon](icons/application.png)
 
 # Mellite

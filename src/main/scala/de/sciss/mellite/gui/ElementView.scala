@@ -310,7 +310,15 @@ object ElementView {
       def value   = directory
       def icon    = ArtifactLocation.icon
 
-      def tryUpdate  (value : Any)(implicit tx: S#Tx): Boolean = false
+      def tryUpdate  (value : Any)(implicit tx: S#Tx): Boolean = value match {
+        case s: _String =>
+          element().entity.modifiableOption.exists { locM =>
+            locM.directory = new File(s)
+            true
+          }
+
+        case _ => false
+      }
 
       def checkUpdate(update: Any)(implicit tx: S#Tx): Boolean = update match {
         case Artifact.Location.Moved(_, Change(_, now)) =>

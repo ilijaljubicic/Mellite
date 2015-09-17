@@ -26,10 +26,11 @@
 package de.sciss
 package mellite
 
+import com.alee.laf.WebLookAndFeel
+import de.sciss.desktop.{WindowHandler, Menu}
+import de.sciss.desktop.impl.{WindowHandlerImpl2, SwingApplicationImpl}
 import de.sciss.mellite.gui.{LogFrame, MainFrame, MenuBar}
-import desktop.impl.SwingApplicationImpl
-import desktop.Menu
-import synth.proc.AuralSystem
+import de.sciss.synth.proc.AuralSystem
 
 object Mellite extends SwingApplicationImpl("Mellite") {
   type Document = mellite.Document[_]
@@ -42,6 +43,11 @@ object Mellite extends SwingApplicationImpl("Mellite") {
   // showLog                     = true
 
   protected lazy val menuFactory: Menu.Root = MenuBar()
+
+  override lazy val windowHandler: WindowHandler = {
+    WebLookAndFeel.install()  // tricky place
+    new WindowHandlerImpl2(this, menuFactory)
+  }
 
   private lazy val _aural = AuralSystem()
 
