@@ -89,6 +89,7 @@ object FrameImpl {
           "timeline.exportJSON"   -> Action(null) {
             val dlg = FileDialog.save(init = Some(userHome / s"$name.json"), title = "Export as JSON")
             dlg.show(Some(this)).foreach { f =>
+              println(s"N.B. sample-rate is ${view.timelineModel.sampleRate}")
               val json  = _cursor.step { implicit tx => ExportJSON(view) }
               val fOut  = new FileOutputStream(f)
               try {
