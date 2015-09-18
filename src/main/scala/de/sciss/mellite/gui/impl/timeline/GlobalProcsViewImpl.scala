@@ -54,12 +54,12 @@ object GlobalProcsViewImpl {
     view
   }
 
-  private final class Impl[S <: Sys[S]](document: Document[S],
-                                        groupHOpt: Option[stm.Source[S#Tx, ProcGroup.Modifiable[S]]])
-                                       (implicit cursor: stm.Cursor[S])
+  final class Impl[S <: Sys[S]](document: Document[S],
+                                groupHOpt: Option[stm.Source[S#Tx, ProcGroup.Modifiable[S]]])
+                               (implicit cursor: stm.Cursor[S])
     extends GlobalProcsView[S] with ComponentHolder[Component] {
 
-    private var procSeq = Vec.empty[ProcView[S]]
+    var procSeq = Vec.empty[ProcView[S]]
 
     private def atomic[A](block: S#Tx => A): A = cursor.step(block)
 

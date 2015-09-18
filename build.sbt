@@ -12,6 +12,8 @@ licenses      := Seq("GPL v2+" -> url("http://www.gnu.org/licenses/gpl-2.0.txt")
 
 scalaVersion  := "2.10.5"
 
+resolvers += "Typesafe Releases" at "https://repo.typesafe.com/typesafe/maven-releases/"
+
 libraryDependencies ++= Seq(
   "de.sciss" %% "soundprocesses"     % "1.9.1",
   "de.sciss" %% "scalacolliderswing" % "1.9.1",  // AudioBusMeter in 1.9.1
@@ -25,6 +27,7 @@ libraryDependencies ++= Seq(
   "de.sciss" %% "fscapejobs"         % "1.4.1",
   "de.sciss" %% "strugatzki"         % "2.1.0",
   "de.sciss" %% "fileutil"           % "1.0.0",
+  "de.sciss" %% "play-json-sealed"   % "0.2.0",
   "de.sciss" %  "weblaf"             % "1.28"
 )
 

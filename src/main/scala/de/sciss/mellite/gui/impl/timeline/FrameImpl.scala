@@ -28,11 +28,14 @@ package gui
 package impl
 package timeline
 
+import java.io.FileOutputStream
+
 import de.sciss.desktop.impl.WindowImpl
 import de.sciss.desktop.{FileDialog, Window}
-import de.sciss.file.File
+import de.sciss.file._
 import de.sciss.lucre.stm
 import de.sciss.synth.proc.{AuralSystem, Sys}
+import play.api.libs.json.Json
 
 import scala.swing.Action
 import scala.swing.event.WindowClosing
@@ -84,9 +87,16 @@ object FrameImpl {
           "actions.stopAllSound"  -> view.stopAllSoundAction,
           "timeline.splitObjects" -> view.splitObjectsAction,
           "timeline.exportJSON"   -> Action(null) {
-            val dlg = FileDialog.save(init = Some(new File(s"$name.json")), title = "Export as JSON")
+            val dlg = FileDialog.save(init = Some(userHome / s"$name.json"), title = "Export as JSON")
             dlg.show(Some(this)).foreach { f =>
-              ExportJSON(view, f)
+              val json  = _cursor.step { implicit tx => ExportJSON(view) }
+              val fOut  = new FileOutputStream(f)
+              try {
+                fOut.write(Json.prettyPrint(json).getBytes("UTF-8"))
+                fOut.flush()
+              } finally {
+                fOut.close()
+              }
             }
           },
           "actions.debugPrint"    -> Action(null) {
